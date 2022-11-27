@@ -1,64 +1,64 @@
 // All tests that are skipped are done so because otherwise I won't allow
 // them to be pushed to a git repo due to running the tests on the prepush rule in package.json
 describe('Example asynchronous JavaScript tests', () => {
-    describe('while testing asynchronous function', () => {
-        // eslint-disable-next-line no-unused-vars
-        it.skip('[FAILING TEST] should timeout because the done callback is not called', (done) => {
-            setTimeout(() => {
-                expect(true).to.be.true;
-            }, 1000);
-        });
+    // describe('while testing asynchronous function', () => {
+    //     // eslint-disable-next-line no-unused-vars
+    //     it.skip('[FAILING TEST] should timeout because the done callback is not called', (done) => {
+    //         setTimeout(() => {
+    //             expect(true).to.be.true;
+    //         }, 1000);
+    //     });
 
-        it('[PASSING BUT BAD TEST] should pass because the done callback is called but takes too long (~1000ms) to run', (done) => {
-            setTimeout(() => {
-                expect(true).to.be.true;
-                done();
-            }, 1000);
-        });
+    //     it('[PASSING BUT BAD TEST] should pass because the done callback is called but takes too long (~1000ms) to run', (done) => {
+    //         setTimeout(() => {
+    //             expect(true).to.be.true;
+    //             done();
+    //         }, 1000);
+    //     });
 
-        describe('better asynchronous test that stubs timer', () => {
-            let fakeClock;
+    //     describe('better asynchronous test that stubs timer', () => {
+    //         let fakeClock;
 
-            beforeEach(() => {
-                fakeClock = sinon.useFakeTimers();
-            });
+    //         beforeEach(() => {
+    //             fakeClock = sinon.useFakeTimers();
+    //         });
 
-            afterEach(() => {
-                fakeClock.restore();
-            });
+    //         afterEach(() => {
+    //             fakeClock.restore();
+    //         });
 
-            it('[PASSING AND BETTER TEST] should stub clock to allow quick resolution of asynchronous function', (done) => {
-                setTimeout(() => {
-                    expect(true).to.be.true;
-                    done();
-                }, 1000);
+    //         it('[PASSING AND BETTER TEST] should stub clock to allow quick resolution of asynchronous function', (done) => {
+    //             setTimeout(() => {
+    //                 expect(true).to.be.true;
+    //                 done();
+    //             }, 1000);
 
-                fakeClock.tick(1000);
-            });
-        });
+    //             fakeClock.tick(1000);
+    //         });
+    //     });
 
-        // eslint-disable-next-line no-unused-vars
-        it.skip('[FAILING TEST] should timeout because the done callback is not called when function has errors', (done) => {
-            setTimeout(() => {
-                throw new Error('Something has gone wrong');
+    //     // eslint-disable-next-line no-unused-vars
+    //     it.skip('[FAILING TEST] should timeout because the done callback is not called when function has errors', (done) => {
+    //         setTimeout(() => {
+    //             throw new Error('Something has gone wrong');
 
-                // eslint-disable-next-line no-unreachable
-                expect(true).to.be.true;
-            }, 10);
-        });
+    //             // eslint-disable-next-line no-unreachable
+    //             expect(true).to.be.true;
+    //         }, 10);
+    //     });
 
-        it('[PASSING TEST] should call the done callback when error occurs', (done) => {
-            setTimeout(() => {
-                try {
-                    throw new Error('Something has gone wrong');
+    //     it('[PASSING TEST] should call the done callback when error occurs', (done) => {
+    //         setTimeout(() => {
+    //             try {
+    //                 throw new Error('Something has gone wrong');
 
-                } catch(error) {
-                    expect(true).to.be.true;
-                    done();
-                }
-            }, 10);
-        });
-    });
+    //             } catch(error) {
+    //                 expect(true).to.be.true;
+    //                 done();
+    //             }
+    //         }, 10);
+    //     });
+    // });
 
     describe('while testing Promises', () => {
         describe('when Promise resolves', () => {
@@ -97,43 +97,43 @@ describe('Example asynchronous JavaScript tests', () => {
             });
         });
 
-        describe('when Promise rejects', () => {
-            it('[FAILING TEST] should pass because it does not return the Promise', () => {
-                const givenString = 'error';
-                Promise.reject(givenString);
-            });
+        // describe('when Promise rejects', () => {
+        //     it('[FAILING TEST] should pass because it does not return the Promise', () => {
+        //         const givenString = 'error';
+        //         Promise.reject(givenString);
+        //     });
 
-            it.skip('[FAILING TEST] should fail because it does not catch the rejection when returning the Promise', () => {
-                const givenString = 'error';
-                return Promise.reject(givenString);
-            });
+        //     it.skip('[FAILING TEST] should fail because it does not catch the rejection when returning the Promise', () => {
+        //         const givenString = 'error';
+        //         return Promise.reject(givenString);
+        //     });
 
-            it('[PASSING TEST] should pass because it catches the rejection and returns the Promise', () => {
-                const givenString = 'error';
-                return Promise.reject(givenString)
-                    .catch((error) => {
-                        expect(error).to.equal(givenString);
-                    });
-            });
+        //     it('[PASSING TEST] should pass because it catches the rejection and returns the Promise', () => {
+        //         const givenString = 'error';
+        //         return Promise.reject(givenString)
+        //             .catch((error) => {
+        //                 expect(error).to.equal(givenString);
+        //             });
+        //     });
 
-            it('[PASSING TEST] should pass because it catches the rejection and calls the done callback', (done) => {
-                const givenString = 'error';
-                Promise.reject(givenString)
-                    .catch((error) => {
-                        expect(error).to.equal(givenString);
-                        done();
-                    });
-            });
+        //     it('[PASSING TEST] should pass because it catches the rejection and calls the done callback', (done) => {
+        //         const givenString = 'error';
+        //         Promise.reject(givenString)
+        //             .catch((error) => {
+        //                 expect(error).to.equal(givenString);
+        //                 done();
+        //             });
+        //     });
 
-            it('[PASSING TEST] should pass because it catches the rejection and calls the done callback using chai-as-promised syntax', (done) => {
-                const givenString = 'error';
-                Promise.reject(givenString)
-                    .catch((error) => {
-                        expect(error).to.equal(givenString);
-                    })
-                    .should.notify(done);
-            });
-        });
+        //     it('[PASSING TEST] should pass because it catches the rejection and calls the done callback using chai-as-promised syntax', (done) => {
+        //         const givenString = 'error';
+        //         Promise.reject(givenString)
+        //             .catch((error) => {
+        //                 expect(error).to.equal(givenString);
+        //             })
+        //             .should.notify(done);
+        //     });
+        // });
     });
 
     describe('while testing function with internal function which takes some time', () => {
